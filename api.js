@@ -25,9 +25,9 @@ app.get('/', function(req,res){
     res.send(getHello());
 })
 
-app.get('/users', function(req,res){
-    res.send(getUsers());
-})
+const userRouter = require('./src/route/user-route');
+
+app.use('/user', userRouter);
 
 app.listen(4000, function(){
     console.log('Hello Express Listen on Port 4000')
