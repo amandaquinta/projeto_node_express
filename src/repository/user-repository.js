@@ -1,0 +1,40 @@
+'use strict'
+
+const mongoose = require('mongoose');
+const User = mongoose.model('UserModel');
+const projection = '_id name email creationDate';
+
+exports.getAll = async() => {
+    return await User.find({status:true});
+};
+
+exports.create = async(data) => {
+    let user = new User(data);
+    return await user.save();
+};
+
+exports.update = async(id, data) => {
+    console.log(data, 'update');
+    let userUpdated = await User.findByIdAndUpdate(id, {
+        $set: {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            status: data.status,
+        }
+    });
+    return await userUpdated;
+};
+
+exports.delete = async(id, data) => {
+    return await User.findOneAndDelete({_id:id});
+};
+
+exports.deleteLogic = async(id, data) => {
+    console.log(data, 'deleteLogic');
+    return await await User.findByIdAndUpdate(id, {
+        $set: {
+            status: false,
+        }
+    });
+};
