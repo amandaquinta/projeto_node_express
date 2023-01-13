@@ -1,23 +1,15 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-var USERS = [
-    { 'id': 1, 'username': 'amandaq', 'password': '123456'},
-    { 'id': 2, 'username': 'luisaf', 'password': '654321'}
-];
+mongoose.connect('mongodb://localhost:27017', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
-var HELLO = [ 
-    {'msg': 'Hello Express'}
-];
-
-function getHello() {
-    return HELLO;
-};
-
-function getUsers() {
-    return USERS;
-};
+// const UserModel = require('./src/models/user')
+// const ProductModel = require('./src/models/product')
 
 app.use(bodyParser.json());
 
@@ -26,9 +18,14 @@ app.get('/', function(req,res){
 })
 
 const userRouter = require('./src/route/user-route');
-
 app.use('/user', userRouter);
+
+const productRouter = require('./src/route/product-route');
+app.use('/product', productRouter);
+
+
 
 app.listen(4000, function(){
     console.log('Hello Express Listen on Port 4000')
 });
+
