@@ -1,19 +1,19 @@
 'use strict'
 
 // var USERS = [
-//     { 'id': 1, 'username': 'amandaq', 'password': '123456'},
-//     { 'id': 2, 'username': 'luisaf', 'password': '654321'}
+//     { 'id': 1, 'productname': 'amandaq', 'password': '123456'},
+//     { 'id': 2, 'productname': 'luisaf', 'password': '654321'}
 // ];
 
-// function getUsers() {
+// function getProducts() {
 //     return USERS;
 // };
 
-const repository = require('../repository/user-repository');
+const repository = require('../repository/product-repository');
 
-exports.getAllUsers = async(req, res, next) => {
+exports.getAllProducts = async(req, res, next) => {
     // console.log('Entrou no nosso controller');
-    // res.send(getUsers());
+    // res.send(getProducts());
     try {
         let dbReturn = await repository.getAll();
         res.status(200).send(dbReturn);
@@ -24,12 +24,12 @@ exports.getAllUsers = async(req, res, next) => {
     }
 };
 
-exports.addUser = async(req, res, next) => {
+exports.addProduct = async(req, res, next) => {
     // console.log('Entrou no nosso controller');
-    // res.send(getUsers());
+    // res.send(getProducts());
     try {
-        let dbReturnUser = await repository.create(req.body);
-        res.status(200).send(dbReturnUser);
+        let dbReturnProduct = await repository.create(req.body);
+        res.status(200).send(dbReturnProduct);
     } catch (e) {
         res.status(500).send({
             message: 'Oops! Something went wrong!', error: e,
@@ -37,9 +37,9 @@ exports.addUser = async(req, res, next) => {
     }
 };
 
-exports.editUser = async(req, res, next) => {
+exports.editProduct = async(req, res, next) => {
     // console.log('Entrou no nosso controller');
-    // res.send(getUsers());
+    // res.send(getProducts());
     try {
         let result = await repository.update(req.params.id ,req.body);
         res.status(200).send(result);
@@ -50,13 +50,13 @@ exports.editUser = async(req, res, next) => {
     }
 };
 
-exports.deleteUser = async(req, res, next) => {
+exports.deleteProduct = async(req, res, next) => {
     // console.log('Entrou no nosso controller');
-    // res.send(getUsers());
+    // res.send(getProducts());
     try {
         await repository.delete(req.params.id);
         res.status(200).send({
-            message: 'User deleted!'
+            message: 'Product deleted!'
         });
     } catch (e) {
         res.status(500).send({

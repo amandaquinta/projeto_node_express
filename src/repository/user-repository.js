@@ -1,7 +1,8 @@
 'use strict'
 
 const mongoose = require('mongoose');
-const User = mongoose.model('UserModel');
+require('../models/user')
+const User = mongoose.model('User');
 const projection = '_id name email creationDate';
 
 exports.getAll = async() => {
