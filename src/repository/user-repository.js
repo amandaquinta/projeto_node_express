@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('../models/user')
 const User = mongoose.model('User');
 const projection = '_id name email creationDate';
+const md5 = require('md5');
 
 exports.getAll = async() => {
     return await User.find({status:true});
@@ -28,6 +29,7 @@ exports.update = async(id, data) => {
 };
 
 exports.delete = async(id, data) => {
+    console.log("repository exports.delete", id, data)
     return await User.findOneAndDelete({_id:id});
 };
 
@@ -39,3 +41,13 @@ exports.deleteLogic = async(id, data) => {
         }
     });
 };
+
+exports.autenticate = async(data) => {
+    console.log(JSON.stringify(data));
+    return  await User.findOne(
+        {
+            email: data.email,
+            password: data.password
+        }
+    );
+}
