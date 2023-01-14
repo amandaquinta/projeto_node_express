@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const UserModel = new Schema({
     name: {type: String, required: true, trim: true},
     email: {type: String, required: true, trim: true, unique: true},
-    passsword: {type: String, required: true, trim: true, select: false},
+    password: {type: String, required: true, trim: true, select: false},
+    passsword: {type: String, trim: true, select: false},
     status: {type:Boolean, required: true, default: true},
     creationDate: {type:  Date, default: Date.now},
 }, {versionKey:false});
