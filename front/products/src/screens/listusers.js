@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, Component } from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from "reactstrap";
 
 const divStyle = {
@@ -6,7 +6,7 @@ const divStyle = {
     margin: '20px',
 }
 
-class ListUsers extends React.Component {
+class ListUsers extends Component {
     constructor(props) {
         super(props);
         // console.log('entrou 01');
