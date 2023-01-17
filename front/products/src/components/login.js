@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Container, Col, Button, FormGroup, Label, Input, Form, FormFeedback, FormText } from "reactstrap";
 import './login.css'
 import { withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import { connect } from "react-redux";
+import { name, count_login, token } from "./actions/user-actions"
 
 class Login extends Component{
     constructor(props) {
@@ -31,6 +34,7 @@ class Login extends Component{
     console.log(`Email: ${this.state.email}`);
 
     const { validate } = this.state;
+    let userData;
     if(this.state.email === "") {
         validate.emailState = "has-danger";
         this.setState({ validate });
@@ -48,15 +52,30 @@ class Login extends Component{
                 return response.json();
             })
             .then(function(data) {
+                userData = data;
                 sessionStorage.setItem('token', data.token);
     
                 console.log(data);
             })
             .catch(console.log);
+        console.log(sessionStorage.getItem("token"));
         if(sessionStorage.getItem('token') !== "undefined") {
+            this.props.actions.name(userData.user.name);
+            this.props.actions.token(userData.token);
             this.props.history.push("/allusers");
+        } else {
+            this.props.actions.count_login(this.props.user.count_login + 1);
+            if(this.props.user.count_login > 5) {
+                // Redirect to ban
+                // this.props.history.push("/banned")
+                console.log("BLOCK")
+            }
         }
     }
+    console.log("Teste Redux");
+    console.log("Nome: " + this.props.user.name);
+    console.log("Token: " + this.props.user.token);
+    console.log(this.props.user.count_login);
   }
   handleChange = async event => {
     const { target } = event;
@@ -101,4 +120,12 @@ class Login extends Component{
   }
 }
 
-export default withRouter(Login);
+export const mapStateToProps = ({ user }) => ({ user });
+export const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators({ name, count_login, token }, dispatch)
+});
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Login); 
+
