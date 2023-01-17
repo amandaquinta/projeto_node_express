@@ -95,6 +95,7 @@ exports.login = async(req, res, next ) => {
         }
         var token = jwt.sign({userID: user._id}, '8^1z7mJ<GL]eOSd<+?co%$', {expiresIn: '2h'});
         res.status(201).send({
+            user,
             token: token
         });
     } catch (e) {

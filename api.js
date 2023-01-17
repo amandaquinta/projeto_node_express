@@ -14,12 +14,12 @@ mongoose.connect('mongodb://localhost:27017', {
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(
-  jwt({
-    secret: "8^1z7mJ<GL]eOSd<+?co%$",
-    algorithms: ["HS256"],
-  }).unless({ path: ['/auth', '/auth/login', '/product'] })
-);
+// app.use(
+//   jwt({
+//     secret: "8^1z7mJ<GL]eOSd<+?co%$",
+//     algorithms: ["HS256"],
+//   }).unless({ path: ['/auth', '/auth/login', '/product'] })
+// );
 
 // app.get('/', function(req,res){
 //     res.send(getHello());
